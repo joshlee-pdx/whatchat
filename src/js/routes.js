@@ -10,6 +10,13 @@ import DynamicRoutePage from '../pages/dynamic-route.vue';
 import RequestAndLoad from '../pages/request-and-load.vue';
 import NotFoundPage from '../pages/404.vue';
 
+import SignInPage from '../pages/auth/signin.vue';
+import SignUpPage from '../pages/auth/signup.vue';
+import EditProfilePage from '../pages/auth/editprofile.vue';
+
+import RequestsPage from '../pages/chat/requests.vue';
+import ContactsPage from '../pages/chat/contacts.vue';
+
 var routes = [
   {
     path: '/',
@@ -18,6 +25,26 @@ var routes = [
   {
     path: '/about/',
     component: AboutPage,
+  },
+  {
+    path: '/signin/',
+    component: SignInPage,
+  },
+  {
+    path: '/signup/',
+    component: SignUpPage,
+  },
+  {
+    path: '/editprofile/',
+    component: EditProfilePage,
+  },
+  {
+    path: '/requests/',
+    component: RequestsPage,
+  },
+  {
+    path: '/contacts/',
+    component: ContactsPage,
   },
   {
     path: '/form/',
