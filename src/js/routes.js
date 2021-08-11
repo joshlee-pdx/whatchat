@@ -16,6 +16,7 @@ import EditProfilePage from '../pages/auth/editprofile.vue';
 
 import RequestsPage from '../pages/chat/requests.vue';
 import ContactsPage from '../pages/chat/contacts.vue';
+import ChatPage from '../pages/chat/chat.vue';
 
 var routes = [
   {
@@ -45,6 +46,10 @@ var routes = [
   {
     path: '/contacts/',
     component: ContactsPage,
+  },
+  {
+    path: '/chat/:friend',
+    component: ChatPage,
   },
   {
     path: '/form/',

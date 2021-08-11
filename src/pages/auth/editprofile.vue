@@ -33,15 +33,6 @@ export default {
   props: {
     f7router: Object,
   },
-
-  // Default data variables
-  data() {
-    return {
-      name:null,
-      email:null,
-      password:null,
-    }
-  }, // End of Data
   computed:{
     image_url() {
       return this.$store.getters.image_url;
@@ -61,10 +52,6 @@ export default {
       }
     },
   }, // End of Computed 
-  watch: {
-    
-    
-  },
   methods:{
     launchFilePicker() {
         this.$refs.file.click()
