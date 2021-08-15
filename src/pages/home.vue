@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="home">
+  <f7-page name="home" @page:beforein="initHome">
     <!-- Top Navbar -->
     <f7-navbar large :sliding="false">
       <f7-nav-left>
@@ -64,6 +64,9 @@ export default {
       //console.log('friend_string: ', friend_string)
       this.f7router.navigate('/chat/'+encodeURIComponent(friend_string))
     },
+    initHome() {
+      this.$store.commit('setShowTabbar',true);
+    }
   },
 };
 </script>

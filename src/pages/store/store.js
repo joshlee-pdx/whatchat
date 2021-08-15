@@ -14,13 +14,18 @@ import ChatModule from './ChatModule';
    },
    state: {
     alert_message: null,
+    show_tabbar: true,
    },
    getters: {
     alert_message:state => state.alert_message,
+    show_tabbar:state => state.show_tabbar,
    },
    mutations: {
     setAlertMessage(state,payload) {
       state.alert_message = payload
+    },
+    setShowTabbar(state,payload) {
+      state.show_tabbar = payload
     }
    }
 })

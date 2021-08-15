@@ -1,5 +1,5 @@
 <template>
-  <f7-page name="editprofile" no-toolbar>
+  <f7-page name="editprofile">
     <f7-navbar title="Edit Profile" back-link="Back"></f7-navbar>
     <div align="center" class="wrapper">
       <img class="image--cover" :src="image_url" alt="" @click="launchFilePicker"/>
@@ -133,6 +133,8 @@ export default {
     if(this.photo_url != null){
       this.$store.commit('setImageURL', this.photo_url);
     }
+
+    this.$store.commit('setShowTabbar',false);
   },
 }
 </script>
