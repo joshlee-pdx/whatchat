@@ -31,6 +31,7 @@
         v-for="(friend, index) in friends"
         :key="index"
         :title="friend.name"
+        :text="friend.latest_message"
         @click='gotoChat(friend)'
       >
         <template #media>

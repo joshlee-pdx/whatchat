@@ -144,53 +144,52 @@ const ChatModule = {
       db.firefriends
         .child(firebase.auth().currentUser.uid)
         .on("value", (snapshot) => {
-          //console.log("getMyFriends: ", snapshot.val());
-          var friends_id = _.map(snapshot.val(), "uid");
+          var friends = snapshot.val();
           var user_details = [];
 
-          // console.log("Friend Request ID: ",friend_request_id);
-          // console.log("Users: ", users);
-
-          _.forEach(friends_id, (uid) => {
-            var user = _.find(users, ["uid", uid]);
+          _.forEach(friends,(friend,key) => {
+            var user = _.find(users, ["uid", friend.uid]);
+            if(friend.latest_message) {
+              user.latest_message = friend.latest_message;
+            } else {
+              user.latest_message = '';
+            }
+            user.friend_key = key;
             user_details.push(user);
-          });
-          //console.log("user_details", user_details);
+          })
+
           commit("setFriends", user_details);
         });
     },
-    sendMessage({},payload) {
-      var promise = new Promise((resolve,reject) => {
-        console.log(payload.img);
+    async sendMessage({dispatch},payload) {
+      var userkey = await dispatch('getUserKey',payload);
+      var friend_info = payload;
+      friend_info.userkey = userkey;
 
+      dispatch('sendLatestMessage', friend_info);
+      try {
         // Push the message being sent to recipient uid to firebase
-        db.firechats.child(firebase.auth().currentUser.uid)
+        await db.firechats.child(firebase.auth().currentUser.uid)
         .child(payload.friend.uid)
         .push({
           sentby:firebase.auth().currentUser.uid,
           text:payload.msg,
           image:payload.img,
           timestamp:firebase.database.ServerValue.TIMESTAMP
-        })
-        .then(() => {
-          // Push the message being sent to sender uid as well to firebase
-          db.firechats.child(payload.friend.uid)
-          .child(firebase.auth().currentUser.uid)
-          .push({
-            sentby:firebase.auth().currentUser.uid,
-            text:payload.msg,
-            image:payload.img,
-            timestamp:firebase.database.ServerValue.TIMESTAMP
-          }) 
-          .then(() => {
-            resolve(true); // Resolve true if it worked
-          })
-          .catch(error => {
-            reject(error); // Catch and reject error if not
-          })
-        })
-      })
-      return promise;
+        });
+
+        // Push the message being sent to sender uid as well to firebase
+        await db.firechats.child(payload.friend.uid)
+        .child(firebase.auth().currentUser.uid)
+        .push({
+          sentby:firebase.auth().currentUser.uid,
+          text:payload.msg,
+          image:payload.img,
+          timestamp:firebase.database.ServerValue.TIMESTAMP
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     getChatMessages({commit}, payload) {
       // Get current user
@@ -211,7 +210,52 @@ const ChatModule = {
         //commit('setChatMessages',messages);
       })
     },
+    getUserKey({}, payload){
+      return new Promise((resolve,reject) => {
+        var friend_id = payload.friend.uid;
+        db.firefriends.child(friend_id).orderByChild("uid")
+        .equalTo(firebase.auth().currentUser.uid)
+        .once('value', snapshot => {
+          let userkey;
+          for(var key in snapshot.val()) userkey = key;
+          resolve(userkey)
+        })
+        .catch(error => {
+          reject(error);
+        });
+      });
+    },
+    async sendLatestMessage({}, payload) {
+      var user_id = firebase.auth().currentUser.uid;
+      var user_key = payload.userkey;
+      var friend_id = payload.friend.uid;
+      var friend_key = payload.friend.friend_key;
 
+      var latest_message = '';
+      if (payload.img != null) {
+        latest_message = 'photo';
+      } else {
+        latest_message = payload.msg;
+      }
+
+      try {
+        // Update latest message on current user id
+        await db.firefriends.child(user_id)
+        .child(friend_key)
+        .update({
+          latest_message: latest_message
+        });
+
+        // Update latest message on friend uid
+        await db.firefriends.child(friend_id)
+        .child(user_key)
+        .update({
+          latest_message: latest_message
+        });
+      } catch (error) {
+        console.log(error.msg);
+      }
+    },
   }, // End of actions
 };
 
