@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 import AuthModule from './AuthModule';
 import FileModule from './FileModule';
 import ChatModule from './ChatModule';
+import ChatGroupModule from './ChatGroupModule';
 
 //store.registerModule('./FileModule.js', FileModule);
 
@@ -11,6 +12,7 @@ import ChatModule from './ChatModule';
     auth: AuthModule,
     file: FileModule,
     chat: ChatModule,
+    groupchat: ChatGroupModule,
    },
    state: {
     alert_message: null,

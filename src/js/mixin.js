@@ -33,7 +33,7 @@ export const mixin = {
       // Change toast to success type for "desired" actions being completed
       // NOTE: In future just send toast type/title code as params + text
       if(text.includes('verification email') || text.includes('success') || 
-        text.includes('Reset') || text.includes('Welcome')){
+        text.includes('Reset') || text.includes('Welcome') ){
         toast_title = "Success";
         toast_type = "success";
 

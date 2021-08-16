@@ -5,11 +5,13 @@ const FileModule = {
     image_url:'https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png',
     files: null,
     images: [],
+    group_image_url: "https://i.imgur.com/StvAwWj.png",
   },
   getters: {
     image_url: state => state.image_url,
     files: state => state.files,
     images: state => state.images,
+    group_image_url: state => state.group_image_url,
   },
   mutations: {
     setImageURL(state,payload){
@@ -20,10 +22,13 @@ const FileModule = {
     },
     setImages(state,payload){
       state.images = payload;
+    },
+    setGroupImageURL(state,payload){
+      state.group_image_url = payload;
     }
   },
   actions: {
-    readFile({commit}) {
+    readFile({commit}, action_name) {
       const files = event.target.files;
       commit('setFiles', files);
       
@@ -34,17 +39,17 @@ const FileModule = {
         fileReader.readAsDataURL(file);
         fileReader.addEventListener('load', () => {
           var imageUrl = fileReader.result;
-          commit('setImageURL', imageUrl);
+          commit(action_name, imageUrl);
         });
       } else {
         commit('setAlertMessage', 'The image size is greater than 200KB');
         return;
       }
     },
-    uploadFile({commit, state}) {
+    uploadFile({commit, state},filepath) {
       return new Promise((resolve,reject) => {
         var file = state.files[0];
-        var storageRef = firebase.storage().ref('profile/'+file.name);
+        var storageRef = firebase.storage().ref(filepath+file.name);
         var uploadTask = storageRef.put(file)
         
         uploadTask.on('state_changed', (snapshot) => {

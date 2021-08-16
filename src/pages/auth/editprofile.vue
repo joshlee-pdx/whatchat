@@ -67,7 +67,7 @@ export default {
         }
 
         // Read the image file 
-        this.$store.dispatch('readFile')
+        this.$store.dispatch('readFile','setImageURL')
       }
     }, // onFilePicked() method close
       
@@ -98,7 +98,7 @@ export default {
           });
         }
         // Upload the new photo and update user name
-        self.$store.dispatch('uploadFile').then(url => {
+        self.$store.dispatch('uploadFile','profile/').then(url => {
           user.updateProfile({
             displayName: self.display_name,
             photoURL: url,

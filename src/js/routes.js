@@ -17,6 +17,10 @@ import EditProfilePage from '../pages/auth/editprofile.vue';
 import RequestsPage from '../pages/chat/requests.vue';
 import ContactsPage from '../pages/chat/contacts.vue';
 import ChatPage from '../pages/chat/chat.vue';
+import ChatGroupsPage from '../pages/chatgroups/chatgroups.vue'
+import ChatGroupPage from '../pages/chatgroups/chatgroup.vue';
+import NewGroupPage from '../pages/chatgroups/newgroup.vue';
+
 
 var routes = [
   {
@@ -50,6 +54,18 @@ var routes = [
   {
     path: '/chat/:friend',
     component: ChatPage,
+  },
+  {
+    path: '/chatgroups/',
+    component: ChatGroupsPage,
+  },
+  {
+    path: '/chatgroup/:group',
+    component: ChatGroupPage,
+  },
+  {
+    path: '/newgroup/',
+    component: NewGroupPage,
   },
   {
     path: '/form/',

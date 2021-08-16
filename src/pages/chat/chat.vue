@@ -51,7 +51,7 @@
     </f7-messagebar>
 
     <f7-messages>
-      <div class="messages" v-for="(messages,index) in chat_messages" :key="index"> 
+      <div class="messages" ref="messages" v-for="(messages,index) in chat_messages" :key="index"> 
         <f7-messages-title><b>{{index}}</b></f7-messages-title>
         <f7-message
           v-for="(message, i) in messages"

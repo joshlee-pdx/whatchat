@@ -95,7 +95,7 @@ export default {
           return;
         }
         // Read the image file 
-        this.$store.dispatch('readFile');
+        this.$store.dispatch('readFile','setImageURL');
       }
     }, // onFilePicked() method close
 
@@ -116,7 +116,7 @@ export default {
         // alert(JSON.stringify(payload))
 
       if (self.files) {
-        self.$store.dispatch('uploadFile').then(url => {
+        self.$store.dispatch('uploadFile','profile/').then(url => {
           payload.photoURL = url;
           self.$store.dispatch('signUp', payload);
         });
