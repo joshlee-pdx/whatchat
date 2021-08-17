@@ -68,7 +68,7 @@ export default {
       var group = {};
       group.name =  this.group_name;
       group.pic = this.group_image_url;
-      console.log(group);
+      //console.log(group);
 
        if(this.files) {
          group.pic = await this.$store.dispatch('uploadFile','group_profile/')

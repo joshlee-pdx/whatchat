@@ -20,6 +20,9 @@ import ChatPage from '../pages/chat/chat.vue';
 import ChatGroupsPage from '../pages/chatgroups/chatgroups.vue'
 import ChatGroupPage from '../pages/chatgroups/chatgroup.vue';
 import NewGroupPage from '../pages/chatgroups/newgroup.vue';
+import AddMembersPage from '../pages/chatgroups/addmembers.vue';
+import GroupMembersPage from '../pages/chatgroups/groupmembers.vue';
+import GroupInfoPage from '../pages/chatgroups/groupinfo.vue';
 
 
 var routes = [
@@ -62,6 +65,18 @@ var routes = [
   {
     path: '/chatgroup/:group',
     component: ChatGroupPage,
+  },
+  {
+    path: '/addmembers/:group_name',
+    component: AddMembersPage,
+  },
+  {
+    path: '/groupmembers/:group_name',
+    component: GroupMembersPage,
+  },
+  {
+    path: '/groupinfo/:group_name',
+    component: GroupInfoPage,
   },
   {
     path: '/newgroup/',
